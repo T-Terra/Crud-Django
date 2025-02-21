@@ -3,7 +3,7 @@
 
 <div style="margin-top: 5rem;" class="container-xl">
     <h2>Cadastro de Usuários</h2>
-    <form action="" method="post">
+    <form action="{% url 'users' %}" method="post">
         {% csrf_token %}
         <div class="mb-3">
           <label class="form-label">Nome</label>
