@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.contrib import messages
 from .models import User
 
-# Create your views here.
-
+# Render pages
 def index(request):
     return render(request, 'crud/form.html')
+def deleteForm(request):
+    return render(request, 'crud/delete.html')
 
 #Create
 def users(request):
@@ -21,3 +24,10 @@ def listUsers(request):
     'users': User.objects.all()
     }
     return render(request, 'crud/users.html', users_db)
+
+#Delete
+def delete(request):
+    id = request.POST.get('id')
+    User.objects.filter(id=id).delete()
+    messages.success(request, 'Usuário deletado com sucesso!')
+    return redirect('list_users')
