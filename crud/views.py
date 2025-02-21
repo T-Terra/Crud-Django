@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
 from django.contrib import messages
 from .models import User
 
@@ -28,6 +27,15 @@ def listUsers(request):
 #Delete
 def delete(request):
     id = request.POST.get('id')
-    User.objects.filter(id=id).delete()
-    messages.success(request, 'Usuário deletado com sucesso!')
-    return redirect('list_users')
+    if not id:
+        messages.error(request, 'ID do usuário não fornecido.')
+        return redirect('deleteForm')
+    else:
+        user = User.objects.filter(id=id).first()
+        if user:
+            user.delete()
+            messages.success(request, 'Usuário deletado com sucesso!')
+            return redirect('list_users')
+        else:
+            messages.error(request, 'Usuário não existe')
+            return redirect('deleteForm')
