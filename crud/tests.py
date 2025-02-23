@@ -7,12 +7,12 @@ from .utils.Tests.lib import Utils
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+load_dotenv(override=True)
 
 class SeleniumTestes(LiveServerTestCase):
     def testAddUser(self):
         # Condig Tests
-        open_browser = True if os.getenv('OPEN_BROWSER') == 'true' else False
+        open_browser = True if os.getenv('OPEN_BROWSER').strip().lower() == 'true' else False
 
         if open_browser:
             options = webdriver.ChromeOptions()
@@ -55,7 +55,7 @@ class SeleniumTestes(LiveServerTestCase):
     
     def testDeleteUser(self):
         # Condig Tests
-        open_browser = True if os.getenv('OPEN_BROWSER') == 'true' else False
+        open_browser = True if os.getenv('OPEN_BROWSER').strip().lower() == 'true' else False
 
         if open_browser:
             options = webdriver.ChromeOptions()
